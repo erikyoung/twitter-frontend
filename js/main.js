@@ -1,38 +1,50 @@
-var weather; 
-var api = 'http://api.openweathermap.org/data/2.5/weather?q='; 
-var url = 'London';   
-var apiKey = "&APPID=df5e505d294be3058dc0eccc363822b7"; 
-var units = '&units=imperial'; 
 
-var input; 
+function addTweet() {
 
-let button = document.getElementById('submit'); 
-button.addEventListener('click', weatherAsk => {
+	var tweet =	document.getElementById("tweet-input").value;
+	//document.getElementById("result").innerHTML = tweet;
+//	document.getElementById("result").appendChild(tweet);
+	//let newTweetHTML = generateTweetHtml(tweetText);
+	// document.getElementById("tweets-list").innerHTML = generateTweetHtml(tweet); 
+	let newTweet = generateTweetHtml(tweet);
+	let previousTweets = document.getElementById('tweets-list').innerHTML;
+	let newStr = newTweet + previousTweets; 
+	document.getElementById('tweets-list').innerHTML = newStr; 
 
-}); 
+}
+
+var tweet =	document.getElementById("tweet-input");
+var message = document.getElementById("char-remaining");
 
 
 
-
-
-function weatherAsk() {
+function updateCharacterCount() {
+	var maxLength = 140; 
 	
-	var url = api + input.value() + apiKey + units; 
-	loadJSON(url, gotData);
-}
 
-function gotData(data) {
-	//printLn(data);
-	weather = data;  
-}
-
-function draw() {
-	background(0); 
-	if (weather) {
-		ellipse(50,100,weather.main.temp, weather.main.temp); 
-		ellipse(150,100,weather.main.humidity, weather.main.humidity); 
-	}
+	 if(tweet.value.length < maxLength) {
+        message.innerHTML = (maxLength-tweet.value.length) + " characters remaining";
+    }	
+	
+	//innnerHTML
+	
 }
 
 
+function generateTweetHtml(tweetText) {
+	return 	`<div class="media">
+						<a class="media-left" href="#fake">
+							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
+						</a>
+						<div class="media-body">
+							<p>${tweetText}</p>
+							<ul class="nav nav-pills nav-pills-custom">
+								<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+							</ul>
+						</div>
 
+					</div>`;
+}
